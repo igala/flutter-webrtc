@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:collection';
 import 'dart:html' as html;
 
 import '../interface/media_stream.dart';
@@ -33,27 +32,22 @@ class MediaStreamWeb extends MediaStream {
     }
   }
 
-  final Map<String, MediaStreamTrack> _audioTracks = {};
-  final Map<String, MediaStreamTrack> _videoTracks = {};
-
   @override
   List<MediaStreamTrack> getAudioTracks() {
-    jsStream.getAudioTracks().forEach((jsTrack) => _audioTracks.putIfAbsent(
-          jsTrack.id,
-          () => MediaStreamTrackWeb(jsTrack),
-        ));
-
-    return _audioTracks.values.toList();
+    var audioTracks = <MediaStreamTrack>[];
+    jsStream
+        .getAudioTracks()
+        .forEach((jsTrack) => audioTracks.add(MediaStreamTrackWeb(jsTrack)));
+    return audioTracks;
   }
 
   @override
   List<MediaStreamTrack> getVideoTracks() {
-    jsStream.getVideoTracks().forEach((jsTrack) => _videoTracks.putIfAbsent(
-          jsTrack.id,
-          () => MediaStreamTrackWeb(jsTrack),
-        ));
-
-    return _videoTracks.values.toList();
+    var audioTracks = <MediaStreamTrack>[];
+    jsStream
+        .getVideoTracks()
+        .forEach((jsTrack) => audioTracks.add(MediaStreamTrackWeb(jsTrack)));
+    return audioTracks;
   }
 
   @override
@@ -61,12 +55,19 @@ class MediaStreamWeb extends MediaStream {
     getTracks().forEach((element) {
       element.dispose();
     });
-
     return super.dispose();
   }
 
   @override
   List<MediaStreamTrack> getTracks() {
     return <MediaStreamTrack>[...getAudioTracks(), ...getVideoTracks()];
+  }
+
+  @override
+  bool get active => jsStream.active;
+
+  @override
+  MediaStream clone() {
+    return MediaStreamWeb(jsStream.clone(), ownerTag);
   }
 }
