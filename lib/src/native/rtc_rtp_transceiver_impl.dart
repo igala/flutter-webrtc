@@ -56,7 +56,7 @@ class RTCRtpTransceiverInitNative extends RTCRtpTransceiverInit {
 
 class RTCRtpTransceiverNative extends RTCRtpTransceiver {
   RTCRtpTransceiverNative(this._id, this._direction, this._mid, this._sender,
-      this._receiver, _peerConnectionId);
+      this._receiver, this._peerConnectionId);
 
   factory RTCRtpTransceiverNative.fromMap(Map<dynamic, dynamic> map,
       {String peerConnectionId}) {

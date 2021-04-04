@@ -139,7 +139,7 @@ public class FlutterRTCVideoRenderer implements EventChannel.StreamHandler {
      * @param mediaStream The {@code MediaStream} to be rendered by this
      * {@code FlutterRTCVideoRenderer} or {@code null}.
      */
-    public void setStream(MediaStream mediaStream) {
+    public void setStream(MediaStream mediaStream,int trackIndex) {
         VideoTrack videoTrack;
 
         if (mediaStream == null) {
@@ -147,7 +147,7 @@ public class FlutterRTCVideoRenderer implements EventChannel.StreamHandler {
         } else {
             List<VideoTrack> videoTracks = mediaStream.videoTracks;
 
-            videoTrack = videoTracks.isEmpty() ? null : videoTracks.get(0);
+            videoTrack = videoTracks.isEmpty() ? null : videoTracks.get(trackIndex);
         }
 
         setVideoTrack(videoTrack);

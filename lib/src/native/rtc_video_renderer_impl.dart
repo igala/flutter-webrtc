@@ -11,6 +11,7 @@ class RTCVideoRendererNative extends VideoRenderer {
   RTCVideoRendererNative();
   final _channel = WebRTC.methodChannel();
   int _textureId;
+  int _trackIndex = 0;
   MediaStream _srcObject;
   StreamSubscription<dynamic> _eventSubscription;
 
@@ -34,6 +35,14 @@ class RTCVideoRendererNative extends VideoRenderer {
   int get textureId => _textureId;
 
   @override
+  int get trackIndex => _trackIndex;
+
+  @override
+  set trackIndex(int index) {
+    _trackIndex = index;
+  }
+
+  @override
   MediaStream get srcObject => _srcObject;
 
   @override
@@ -44,7 +53,8 @@ class RTCVideoRendererNative extends VideoRenderer {
     _channel.invokeMethod('videoRendererSetSrcObject', <String, dynamic>{
       'textureId': textureId,
       'streamId': stream?.id ?? '',
-      'ownerTag': stream?.ownerTag ?? ''
+      'ownerTag': stream?.ownerTag ?? '',
+      'trackIndex': trackIndex
     }).then((_) {
       value = (stream == null)
           ? RTCVideoValue.empty

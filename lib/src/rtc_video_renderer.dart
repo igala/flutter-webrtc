@@ -30,6 +30,9 @@ class RTCVideoRenderer {
 
   int get textureId => _delegate.textureId;
 
+  set trackIndex(int index) => _delegate.trackIndex = index;
+
+
   Future<void> dispose() async {
     return _delegate.dispose();
   }

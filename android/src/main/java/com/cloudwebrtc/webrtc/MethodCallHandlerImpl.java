@@ -414,6 +414,7 @@ public class MethodCallHandlerImpl implements MethodCallHandler, StateProvider {
         int textureId = call.argument("textureId");
         String streamId = call.argument("streamId");
         String ownerTag = call.argument("ownerTag");
+        int trackIndex = call.argument("trackIndex");
         FlutterRTCVideoRenderer render = renders.get(textureId);
         if (render == null) {
           resultError("videoRendererSetSrcObject",  "render [" + textureId + "] not found !", result);
@@ -425,7 +426,7 @@ public class MethodCallHandlerImpl implements MethodCallHandler, StateProvider {
         } else  {
           stream = getStreamForId(streamId, ownerTag);
         }
-        render.setStream(stream);
+        render.setStream(stream,trackIndex);
         result.success(null);
         break;
       }
@@ -1083,6 +1084,7 @@ public class MethodCallHandlerImpl implements MethodCallHandler, StateProvider {
     String streamId = getNextStreamUUID();
     MediaStream mediaStream = mFactory.createLocalMediaStream(streamId);
     localStreams.put(streamId, mediaStream);
+
 
     if (mediaStream == null) {
       resultError("createLocalMediaStream", "Failed to create new media stream", result);

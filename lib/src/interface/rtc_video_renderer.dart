@@ -60,6 +60,9 @@ abstract class VideoRenderer extends ValueNotifier<RTCVideoValue> {
 
   bool get renderVideo;
   int get textureId;
+  int get trackIndex;
+
+  set trackIndex(int index);
 
   Future<void> initialize();
 
