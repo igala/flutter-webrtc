@@ -32,6 +32,7 @@ class RTCVideoRenderer {
 
   set trackIndex(int index) => _delegate.trackIndex = index;
 
+  get trackIndex => _delegate.trackIndex;
 
   Future<void> dispose() async {
     return _delegate.dispose();
