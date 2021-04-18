@@ -179,4 +179,7 @@ class RTCVideoRendererWeb extends VideoRenderer {
     }
     return false;
   }
+
+  @override
+  int trackIndex;
 }
