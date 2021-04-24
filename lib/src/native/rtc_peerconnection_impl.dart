@@ -175,6 +175,13 @@ class RTCPeerConnectionNative extends RTCPeerConnection {
       case 'onTrack':
         var params = map['streams'] as List<dynamic>;
         var streams = params.map((e) => MediaStreamNative.fromMap(e)).toList();
+        if (_remoteStreams.isEmpty) {
+          _remoteStreams
+              .add(MediaStreamNative(streams.first.id, _peerConnectionId));
+        } else {
+          _remoteStreams[0] =
+              MediaStreamNative(streams.first.id, _peerConnectionId);
+        }
         var transceiver = map['transceiver'] != null
             ? RTCRtpTransceiverNative.fromMap(map['transceiver'],
                 peerConnectionId: _peerConnectionId)
